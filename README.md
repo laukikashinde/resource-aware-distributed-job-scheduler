@@ -1,4 +1,4 @@
-# 🚀 Distributed Task Orchestrator
+# Resource Aware Distributed Job Scheduling and Execution System 
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-green.svg)](https://fastapi.tiangolo.com/)

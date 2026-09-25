@@ -1,9 +1,10 @@
-from fastapi import APIRouter, HTTPException, status, Request
+from fastapi import APIRouter, HTTPException, status, Request, Query
 from db.connection import task_collection, workers_collection, client
 from models.model import Task, TaskCreate, TaskResponse, StatusUpdate
 from bson import ObjectId
 from pymongo import ReturnDocument
 from datetime import datetime, timezone
+from typing import Optional
 from core.limiter import limiter
 
 router = APIRouter()
@@ -116,6 +117,38 @@ async def get_task(request: Request, worker_id: str):
 )
 async def get_tasks(request: Request):
     tasks = task_collection.find({"status": "pending"})
+    return [_task_to_response(task) for task in tasks]
+
+
+@router.get(
+    "/all",
+    response_model=list[TaskResponse],
+    status_code=status.HTTP_200_OK,
+)
+async def get_all_tasks(
+    request: Request,
+    status_filter: Optional[str] = Query(
+        default=None,
+        alias="status",
+        description="Filter by status: pending | running | completed | failed",
+    ),
+):
+    """Return all task records across every lifecycle status.
+    Optionally filter by ?status=running etc.
+    Sorted newest-first (by updated_at) so the history table shows recent
+    activity at the top.
+    """
+    query: dict = {}
+    valid_statuses = {"pending", "running", "completed", "failed"}
+    if status_filter:
+        if status_filter not in valid_statuses:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid status filter. Allowed: {sorted(valid_statuses)}",
+            )
+        query["status"] = status_filter
+
+    tasks = task_collection.find(query).sort("updated_at", -1)
     return [_task_to_response(task) for task in tasks]
 
 

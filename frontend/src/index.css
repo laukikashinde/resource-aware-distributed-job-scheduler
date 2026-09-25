@@ -1,0 +1,116 @@
+/* ── Fonts ───────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@import "tailwindcss";
+
+/*
+  ════════════════════════════════════════════════════════════
+  DESIGN SYSTEM — Five-color palette
+  Yale Blue   #0F3B59   primary brand / surfaces
+  Cool Steel  #7D929E   secondary text / borders / meta
+  Dust Grey   #DBD4CC   primary readable text / labels
+  Goldenrod   #DBA12C   accent / CTA / active / numbers
+  Dark Coffee #3E251E   deep contrast / subtle accent
+  ════════════════════════════════════════════════════════════
+*/
+
+:root {
+  /* ── Brand ── */
+  --yale:        #0F3B59;
+  --yale-mid:    #174d72;   /* slightly lighter than yale for cards */
+  --yale-rim:    #1d5f8a;   /* borders, dividers */
+  --yale-dark:   #0a2840;   /* deepest surfaces */
+  --yale-darker: #071e30;   /* page background */
+
+  --steel:       #7D929E;
+  --steel-light: #9ab0bc;
+  --steel-dim:   #5a7280;
+
+  --dust:        #DBD4CC;
+  --dust-dim:    #b5aca3;   /* softer body text */
+
+  --gold:        #DBA12C;
+  --gold-light:  #e8b84b;
+  --gold-dark:   #b8841f;
+  --gold-faint:  rgba(219,161,44,0.12);
+  --gold-border: rgba(219,161,44,0.30);
+
+  --coffee:      #3E251E;
+  --coffee-dark: #2a1812;
+
+  /* ── Surfaces (Yale-Blue derived, NOT black) ── */
+  --bg-page:     #071e30;   /* page background — very dark Yale */
+  --bg-card:     #0c2d45;   /* card / panel */
+  --bg-raised:   #112f47;   /* table header / input bg / elevated */
+  --bg-hover:    #163a56;   /* row hover / button hover */
+  --bg-active:   #1a4466;   /* selected / active state */
+
+  /* ── Borders ── */
+  --bd:          #1d4a68;   /* standard border */
+  --bd-soft:     #163a56;   /* subtle row separator */
+  --bd-strong:   #246088;   /* accent border */
+
+  /* ── Text ── */
+  --tx-primary:  #DBD4CC;   /* Dust Grey — main readable text */
+  --tx-body:     #b5aca3;   /* body / descriptions */
+  --tx-meta:     #7D929E;   /* Cool Steel — metadata, labels */
+  --tx-dim:      #4e6878;   /* very muted, timestamps */
+
+  /* ── Status — palette-consistent ── */
+  --s-pending-text:  #7D929E;   /* Cool Steel */
+  --s-pending-bg:    rgba(125,146,158,0.10);
+  --s-pending-bd:    rgba(125,146,158,0.28);
+
+  --s-running-text:  #DBA12C;   /* Goldenrod */
+  --s-running-bg:    rgba(219,161,44,0.10);
+  --s-running-bd:    rgba(219,161,44,0.28);
+
+  --s-completed-text: #7abf94;  /* muted green — accent only */
+  --s-completed-bg:   rgba(100,180,130,0.08);
+  --s-completed-bd:   rgba(100,180,130,0.22);
+
+  --s-failed-text:   #c4756a;   /* muted terracotta / warm red */
+  --s-failed-bg:     rgba(180,90,80,0.10);
+  --s-failed-bd:     rgba(180,90,80,0.26);
+
+  /* ── Fonts ── */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* ── Reset & Base ───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-family: var(--font-sans);
+  font-size: 15px;           /* bumped up from 14px for readability */
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--tx-primary);
+  margin: 0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: var(--bg-card); }
+::-webkit-scrollbar-thumb  { background: var(--bd); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--steel-dim); }
+
+/* Focus */
+input:focus, select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--gold);
+}
+button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* Smooth resource-bar transition */
+.res-bar { transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* Monospace utility */
+.font-mono { font-family: var(--font-mono) !important; }
